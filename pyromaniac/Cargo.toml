@@ -8,7 +8,10 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.71"
 axum = { version = "0.6.18", features = ["tracing"] }
+console-subscriber = "0.1.10"
 dotenvy = "0.15.7"
+opentelemetry = { version = "0.19.0", features = ["rt-tokio"] }
+opentelemetry-jaeger = { version = "0.18.0", features = ["rt-tokio"] }
 pyrod = { version = "0.1.0", path = "../pyrod" }
 serde = "1.0.167"
 serde_json = "1.0.100"
@@ -16,4 +19,5 @@ tarpc = { version = "0.33.0", features = ["serde-transport"] }
 tempfile = "3.6.0"
 tokio = { version = "1.29.1", features = ["full"] }
 tracing = "0.1.37"
+tracing-opentelemetry = "0.19.0"
 tracing-subscriber = "0.3.17"
