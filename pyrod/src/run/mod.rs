@@ -1,4 +1,5 @@
 mod bash;
+mod haskell;
 mod java;
 mod python;
 mod rust;
@@ -14,6 +15,7 @@ pub enum Language {
     Java,
     Bash,
     Sh,
+    Haskell,
 }
 
 pub trait Runner: Send + Sync {
@@ -32,6 +34,7 @@ impl Language {
             Language::Java => Box::leak(Box::new(java::JavaRunner)),
             Language::Bash => Box::leak(Box::new(bash::BashRunner)),
             Language::Sh => Box::leak(Box::new(sh::ShRunner)),
+            Language::Haskell => Box::leak(Box::new(haskell::HaskellRunner)),
         }
     }
 }
@@ -47,6 +50,7 @@ impl std::fmt::Display for Language {
                 Language::Java => "java",
                 Language::Bash => "bash",
                 Language::Sh => "sh",
+                Language::Haskell => "haskell",
             }
         )
     }

@@ -8,7 +8,7 @@ if [ -z "$1" ]; then
     exit 0
 fi
 
-all=("rust" "python" "java" "bash" "sh")
+all=("rust" "python" "java" "bash" "sh", "haskell")
 
 if [[ $lang == "all" ]] then
     echo "building rootfs for all languages"
@@ -18,11 +18,11 @@ if [[ $lang == "all" ]] then
     done
     exit 0
 fi
-# 100MB rootfs - change if gonna run out of space
 
+# rootfs sizes for each language
 case $lang in
 "rust")
-    size=1000
+    size=1000 #large because cargo moment - TODO make smaller
     ;;
 "python")
     size=100
@@ -35,6 +35,9 @@ case $lang in
     ;;
 "sh")
     size=20
+    ;;
+"haskell")
+    size=1400 #large because we have to install gcc and lots of build/toolchain shite
     ;;
 *)
     echo "unrecognised language $1"

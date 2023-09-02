@@ -1,0 +1,19 @@
+FROM alpine:3.18
+
+# create service user for untrusted processes to run under
+# system group, gid 111
+RUN addgroup -S -g 111 untrusted
+# system user, no password, no home dir, no shell, uid 111, group untrusted
+RUN adduser -S -D -H -s /bin/false -u 111 -G untrusted untrusted
+
+
+# copy built pyrod binary in
+COPY target/x86_64-unknown-linux-musl/release/pyrod /bin
+
+# install ghc and other assorted deps (doesnt work without and these were suggested in a random reddit thread)
+RUN apk update && apk add binutils-gold gmp-dev libc-dev gcc libffi-dev musl-dev ncurses-dev ghc
+
+# we need to make /usr/libexec/gcc globally executable 
+# copy this image's filesystem to the mounted filesystem when ran
+CMD for d in bin etc lib root sbin usr; do tar c "/$d" | tar x -C /rootfs; done && \
+    for d in dev proc run sys var; do mkdir /rootfs/${d}; done
